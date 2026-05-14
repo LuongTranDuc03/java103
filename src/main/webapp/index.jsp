@@ -46,10 +46,10 @@
 
     <br>
     <input type="checkbox" name="favoriteLanguage" value="Java">Java
-    <input type="checkbox" name="favoriteLanguage" value="Java">JavaScript
-    <input type="checkbox" name="favoriteLanguage" value="Java">C#
-    <input type="checkbox" name="favoriteLanguage" value="Java">Kotlin
-    <input type="checkbox" name="favoriteLanguage" value="Java">Other...
+    <input type="checkbox" name="favoriteLanguage" value="JavaScript">JavaScript
+    <input type="checkbox" name="favoriteLanguage" value="C#">C#
+    <input type="checkbox" name="favoriteLanguage" value="Kotlin">Kotlin
+    <input type="checkbox" name="favoriteLanguage" value="Other">Other...
 </form>
 
 <a href="hello-servlet">Hello Servlet</a>

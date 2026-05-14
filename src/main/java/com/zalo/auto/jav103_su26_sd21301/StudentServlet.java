@@ -11,13 +11,31 @@ import java.io.PrintWriter;
 public class StudentServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+
+        String firstName = request.getParameter("firstName");
+        String lastName = request.getParameter("lastName");
+        String country = request.getParameter("country");
+        String[] favoriteLanguages = request.getParameterValues("favoriteLanguage");
+
         out.println("<html><body>");
-        out.println("<h1>Student Servlet</h1>");
-        out.println("<p>Hello World!</p>");
-        out.println("The student is: " + request.getParameter("firstName") + " " + request.getParameter("lastName"));
+        out.println("<h1>Student Data Submitted</h1>");
+        out.println("<p>First Name: " + firstName + "</p>");
+        out.println("<p>Last Name: " + lastName + "</p>");
+        out.println("<p>Country: " + country + "</p>");
+
+        out.println("<p>Favorite Languages: ");
+        if (favoriteLanguages != null) {
+            for (String lang : favoriteLanguages) {
+                out.println(lang + " ");
+            }
+        } else {
+            out.println("None selected");
+        }
+        out.println("</p>");
+
+        out.println("<br><a href='index.jsp'>Back to Form</a>");
         out.println("</body></html>");
     }
 
