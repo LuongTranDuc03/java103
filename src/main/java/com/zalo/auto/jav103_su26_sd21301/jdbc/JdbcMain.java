@@ -1,5 +1,7 @@
 package com.zalo.auto.jav103_su26_sd21301.jdbc;
 
+import com.zalo.auto.jav103_su26_sd21301.utils.EntityManagerUtils;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -15,6 +17,14 @@ public class JdbcMain {
 
         } catch (SQLException e) {
             System.out.println("Failed to connect to database");
+            e.printStackTrace();
+        }
+
+        try (var emf = EntityManagerUtils.getEntityManager()) {
+            System.out.println("Created tables... ");
+
+        } catch (Exception e) {
+            System.out.println("Failed to create EntityManager");
             e.printStackTrace();
         }
     }

@@ -34,7 +34,6 @@
 <form action="StudentServlet">
     First name: <input type="text" name="firstName"><br>
     Last name: <input type="text" name="lastName"><br>
-    <input type="submit" value="Submit">
 
     <br>
     <select name="country">
@@ -50,8 +49,16 @@
     <input type="checkbox" name="favoriteLanguage" value="C#">C#
     <input type="checkbox" name="favoriteLanguage" value="Kotlin">Kotlin
     <input type="checkbox" name="favoriteLanguage" value="Other">Other...
+    <br>
+    <input type="submit" value="Submit">
 </form>
 
 <a href="hello-servlet">Hello Servlet</a>
+<br><br>
+<form action="students" method="GET">
+    <button type="submit" style="padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">
+        Xem danh sách sinh viên
+    </button>
+</form>
 </body>
 </html>
