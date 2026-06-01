@@ -81,29 +81,79 @@ public class StudentServlet extends HttpServlet {
         }
     }
 
-    private void insertStudent(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        // read student from form
-        Student student = getStudentFromForm(request);
-
-        //save to db
-        service.addStudent(student);
-
-        // redirect to list of students
-        response.sendRedirect(request.getContextPath() + "/students");
-    }
-
-    private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        Student student = getStudentFromForm(request);
-        service.updateStudent(student);
-        response.sendRedirect(request.getContextPath() + "/students");
-    }
-
-    private Student getStudentFromForm(HttpServletRequest request) {
-        Long id = Long.parseLong(request.getParameter("id"));
+    private void insertStudent(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String idStr = request.getParameter("id");
         String name = request.getParameter("name");
         String email = request.getParameter("email");
         String phone = request.getParameter("phone");
 
-        return new Student(id, name, email, phone);
+        String errorMessage = null;
+        Long id = null;
+
+        // Validation for ID
+        if (idStr == null || idStr.trim().isEmpty()) {
+            errorMessage = "Id is required!";
+        } else {
+            try {
+                id = Long.parseLong(idStr.trim());
+                // Check if ID already exists
+                if (service.getStudentById(id) != null) {
+                    errorMessage = "Id already exists!";
+                }
+            } catch (NumberFormatException e) {
+                errorMessage = "Id must be a number!";
+            }
+        }
+
+        // Validation for Name
+        if (errorMessage == null && (name == null || name.trim().isEmpty())) {
+            errorMessage = "Name is required!";
+        }
+
+        // If validation fails
+        if (errorMessage != null) {
+            Student student = new Student(id, name, email, phone);
+            request.setAttribute("errorMessage", errorMessage);
+            request.setAttribute("student", student);
+            request.getRequestDispatcher("/views/addStudent.jsp").forward(request, response);
+            return;
+        }
+
+        // Save to DB and redirect
+        Student student = new Student(id, name, email, phone);
+        service.addStudent(student);
+        response.sendRedirect(request.getContextPath() + "/students");
+    }
+
+    private void updateStudent(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        String idStr = request.getParameter("id");
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String phone = request.getParameter("phone");
+
+        String errorMessage = null;
+        Long id = null;
+
+        try {
+            id = Long.parseLong(idStr.trim());
+        } catch (NumberFormatException e) {
+            errorMessage = "Invalid Id!";
+        }
+
+        if (errorMessage == null && (name == null || name.trim().isEmpty())) {
+            errorMessage = "Name is required!";
+        }
+
+        if (errorMessage != null) {
+            Student student = new Student(id, name, email, phone);
+            request.setAttribute("errorMessage", errorMessage);
+            request.setAttribute("student", student);
+            request.getRequestDispatcher("/views/editStudent.jsp").forward(request, response);
+            return;
+        }
+
+        Student student = new Student(id, name, email, phone);
+        service.updateStudent(student);
+        response.sendRedirect(request.getContextPath() + "/students");
     }
 }

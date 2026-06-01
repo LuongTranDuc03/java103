@@ -17,11 +17,16 @@
         <table>
             <tr>
                 <td><label>Id</label></td>
-                <td><input type="text" name="id" value="${student.id}"></td>
+                <td><input type="text" name="id" value="${not empty student.id ? student.id : param.id}"></td>
             </tr>
             <tr>
                 <td><label>Name</label></td>
                 <td><input type="text" name="name" value="${student.name}"></td>
+                <td>
+                    <c:if test="${not empty errorMessage}">
+                        <p style="color: red">${errorMessage}</p>
+                    </c:if>
+                </td>
             </tr>
             <tr>
                 <td><label>Email</label></td>
